@@ -8,11 +8,9 @@ import com.customer.aplication.port.CepServicePort;
 import com.customer.aplication.port.ClienteServicePort;
 import com.customer.aplication.port.EstadoServicePort;
 import com.customer.aplication.port.MunicipioServicePort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -65,6 +63,15 @@ public class ClienteController {
     public ResponseEntity<List<Municipio>> listarMunicipiosPorEstado(@PathVariable Integer idEstado) {
         List<Municipio> municipios = municipioServicePort.buscarPorMunicipios(idEstado);
         return ResponseEntity.ok(municipios);
+    }
+
+    @PutMapping("/{cpf}/endereco")
+    public ResponseEntity<Cliente> alterarEnderecoCliente(@PathVariable String cpf, @RequestBody Endereco novoEndereco) {
+        Cliente clienteAtualizado = clienteService.alterarEndereco(cpf, novoEndereco);
+        if (clienteAtualizado == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        return ResponseEntity.ok(clienteAtualizado);
     }
 
 }
