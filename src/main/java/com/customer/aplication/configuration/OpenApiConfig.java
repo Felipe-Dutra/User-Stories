@@ -1,8 +1,9 @@
 package com.customer.aplication.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
+import io.swagger.v3.oas.models.PathItem;
 import io.swagger.v3.oas.models.info.Info;
-import org.springdoc.core.GroupedOpenApi;
+import org.springdoc.core.models.GroupedOpenApi;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,10 +19,10 @@ public class OpenApiConfig {
     }
 
     @Bean
-    public OpenAPI customOpenAPI() {
+    public OpenAPI OpenAPI() {
         return new OpenAPI()
                 .info(new Info().title("API de Alteração de Dados Cadastrais")
                         .description("API para consulta e alteração de dados cadastrais de clientes.")
-                        .version("1.0.0"));
+                        .version("1.0.0")).path("/clientes", new PathItem());
     }
 }
